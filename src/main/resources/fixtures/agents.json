@@ -1,0 +1,5 @@
+[
+  { "code": "AGT-123", "name": "Juan Pérez", "subscriberId": "SUB-001" },
+  { "code": "AGT-124", "name": "María López", "subscriberId": "SUB-001" },
+  { "code": "AGT-201", "name": "Carlos Ruiz", "subscriberId": "SUB-002" }
+]
