@@ -1,0 +1,5 @@
+[
+  { "code": "STANDARD",    "description": "Riesgo estándar" },
+  { "code": "PREFERRED",   "description": "Riesgo preferente" },
+  { "code": "SUBSTANDARD", "description": "Riesgo subestándar" }
+]
