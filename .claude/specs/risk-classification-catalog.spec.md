@@ -1,6 +1,6 @@
 ---
 id: SPEC-006
-status: DRAFT
+status: IMPLEMENTED
 feature: risk-classification-catalog
 created: 2026-04-21
 updated: 2026-04-21
