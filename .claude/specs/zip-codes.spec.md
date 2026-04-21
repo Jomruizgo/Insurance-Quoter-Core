@@ -1,6 +1,6 @@
 ---
 id: SPEC-005
-status: DRAFT
+status: IMPLEMENTED
 feature: zip-codes
 created: 2026-04-21
 updated: 2026-04-21
