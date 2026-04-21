@@ -6,10 +6,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 
+import java.io.IOException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class GuaranteeJsonAdapterTest {
 
@@ -96,12 +99,25 @@ class GuaranteeJsonAdapterTest {
     }
 
     @Test
-    void constructor_throwsWhenResourceIsUnreadable() {
+    void constructor_throwsWhenJsonIsMalformed() {
         // GIVEN
         Resource badResource = new ByteArrayResource("not-valid-json".getBytes());
 
         // THEN
         assertThatThrownBy(() -> new GuaranteeJsonAdapter(objectMapper, badResource))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining("Failed to load guarantees");
+    }
+
+    @Test
+    void constructor_throwsWhenFileNotFound() throws IOException {
+        // GIVEN — resource that throws IOException on getInputStream (simulates missing file)
+        Resource missingResource = mock(Resource.class);
+        when(missingResource.getInputStream()).thenThrow(new IOException("File not found"));
+        when(missingResource.getDescription()).thenReturn("fixtures/guarantees.json");
+
+        // THEN
+        assertThatThrownBy(() -> new GuaranteeJsonAdapter(objectMapper, missingResource))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("Failed to load guarantees");
     }
