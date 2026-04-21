@@ -7,7 +7,7 @@
 
 ## Resumen
 
-Total: 9 | Alto (A): 4 | Medio (S): 3 | Bajo (D): 2
+Total: 9 | Alto (A): 3 | Medio (S): 3 | Bajo (D): 3
 
 ---
 
@@ -17,7 +17,7 @@ Total: 9 | Alto (A): 4 | Medio (S): 3 | Bajo (D): 2
 |-------|--------|------------------------|----------|-------|---------|
 | R-001 | HU-01  | Folio duplicado por falla en atomicidad de `nextval`: si la secuencia PostgreSQL falla silenciosamente o el adaptador reintenta la llamada, dos consumidores pueden recibir el mismo folio, corrompiendo el modelo de cotizaciones en Insurance-Quoter-Back | Operación irrecuperable, integración externa (DB), alta frecuencia | A | Obligatorio |
 | R-002 | HU-01  | Indisponibilidad de la base de datos (`insurance_core_db:5433`): el servicio no tiene circuit breaker ni fallback; cualquier falla de red o caída del contenedor PostgreSQL expone un 503 sin gestión de degradación controlada | Integración externa, SLA implícito como dependencia bloqueante de cotizaciones | A | Obligatorio |
-| R-003 | HU-01  | Overflow de padding a 5 dígitos: la secuencia supera 99.999 sin `MAXVALUE` ni `CYCLE`; el formato `FOL-2026-100000` excede los 14 caracteres esperados y puede romper validaciones en sistemas consumidores | Operación irrecuperable (datos en producción ya guardados con formato previo) | A | Obligatorio |
+| R-003 | HU-01  | Overflow de padding a 5 dígitos: la secuencia supera 99.999 sin `MAXVALUE` ni `CYCLE`; el formato `FOL-2026-100000` excede los 14 caracteres esperados | Deuda técnica aceptada | D | Opcional |
 | R-004 | HU-01  | Rollover de año en el folio: el año se toma del reloj del sistema en `FolioSequenceJpaAdapter`, no del mismo instante que `generatedAt` en el use case; en el cambio de año (31-dic 23:59 → 01-ene 00:01 UTC) puede haber inconsistencia entre el año del `folioNumber` y el año real del `generatedAt` si el reloj se lee en dos puntos distintos del flujo | Lógica de negocio compleja, borde temporal irrecuperable | A | Obligatorio |
 | R-005 | HU-01  | Ausencia de autenticación en `GET /v1/folios`: el endpoint no requiere auth por diseño ("servicio interno"). Sin controles de red (ej. service mesh, API Gateway), cualquier proceso con acceso a la red interna puede consumir la secuencia y agotar folios o causar gaps en la numeración | Seguridad, operación irrecuperable (secuencia consumida no se revierte) | S | Obligatorio |
 | R-006 | HU-01  | Gaps en la secuencia por transacciones abortadas: si el use case lanza excepción después de `nextval` pero antes de retornar la respuesta HTTP, el valor de secuencia se pierde permanentemente (comportamiento esperado de PostgreSQL SEQUENCE, pero puede sorprender a auditores que esperan numeración continua) | Lógica de negocio compleja, muchas dependencias (JPA tx, Spring MVC) | S | Obligatorio |
@@ -47,9 +47,8 @@ Total: 9 | Alto (A): 4 | Medio (S): 3 | Bajo (D): 2
 
 ### R-003: Overflow de padding a 5 dígitos (secuencia > 99.999)
 
-- **Mitigación**: (1) Agregar un test unitario en `FolioSequenceJpaAdapterTest` con `seq = 100000L` y verificar que el resultado produce `FOL-2026-100000` (6 dígitos) para documentar el comportamiento y alertar al equipo. (2) Crear una alerta de monitoreo operativo cuando `nextval` supere 90.000 (10% de margen). (3) Definir en la spec si el padding debe extenderse a 6 dígitos o si los consumidores validan longitud fija de 14 chars — la regla de negocio 1 dice "máximo representable: 99.999 por año sin overflow de dígitos" pero la secuencia no se reinicia por año, lo que hace el límite alcanzable en operación normal.
-- **Tests obligatorios**: Test unitario con valor de secuencia en borde superior (99999, 100000). Test de contrato en `Insurance-Quoter-Back` que verifique qué ocurre si el `folioNumber` recibido tiene más de 14 chars.
-- **Bloqueante para release**: Si (requiere decisión de negocio antes de ir a producción)
+- **Decisión de negocio (2026-04-21):** el volumen anual de cotizaciones no superará 99.999. Si en el futuro el negocio requiere mayor capacidad, se tratará como una nueva feature. Este riesgo queda clasificado como **Bajo (D)** y no es bloqueante para release.
+- **Acción opcional**: alerta de monitoreo operativo cuando `nextval` supere 90.000 (10% de margen de advertencia).
 
 ---
 
@@ -67,7 +66,7 @@ Total: 9 | Alto (A): 4 | Medio (S): 3 | Bajo (D): 2
 |--------|---------------|--------|
 | R-001 Duplicado concurrente | `FolioSequenceConcurrencyTest` (20 threads) | Parcial — ampliar a ≥ 100 threads |
 | R-002 DB indisponible | Ninguno | Sin cobertura |
-| R-003 Overflow padding | Ninguno | Sin cobertura |
+| R-003 Overflow padding | N/A — decisión de negocio aceptada | Bajo (D), no bloqueante |
 | R-004 Rollover de año | Ninguno | Sin cobertura |
 | R-005 Ausencia de auth | Ninguno (decisión de arquitectura) | Pendiente decisión |
 | R-006 Gaps en secuencia | Ninguno | Sin cobertura |
