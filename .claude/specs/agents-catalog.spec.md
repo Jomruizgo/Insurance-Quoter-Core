@@ -1,6 +1,6 @@
 ---
 id: SPEC-003
-status: APPROVED
+status: IMPLEMENTED
 feature: agents-catalog
 created: 2026-04-21
 updated: 2026-04-21
