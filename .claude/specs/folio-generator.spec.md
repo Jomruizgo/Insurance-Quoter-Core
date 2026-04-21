@@ -88,7 +88,7 @@ CRITERIO-1.4: El año en el folio refleja el año UTC del momento de generación
 
 ### Reglas de Negocio
 
-1. **Patrón de folio:** `FOL-<YYYY>-<NNNNN>` donde `YYYY` es el año UTC actual y `NNNNN` es la secuencia global con padding cero a 5 dígitos (máximo representable: 99 999 por año sin overflow de dígitos).
+1. **Patrón de folio:** `FOL-<YYYY>-<NNNNN>` donde `YYYY` es el año UTC actual y `NNNNN` es la secuencia global con padding cero a 5 dígitos (máximo representable: 99 999 por año sin overflow de dígitos). **Supuesto de negocio:** el volumen anual de cotizaciones no superará 99 999. Si en el futuro el negocio requiere mayor capacidad, se tratará como una nueva feature que amplíe el patrón — no como corrección de esta spec.
 2. **Secuencia global:** la secuencia no se reinicia por año, por suscriptor ni por ningún otro criterio. Es una única secuencia creciente en toda la vida del sistema.
 3. **Concurrencia:** la unicidad está garantizada por el motor de PostgreSQL mediante `nextval('folio_sequence')` — no se usan locks de aplicación ni UUIDs.
 4. **Sin almacenamiento del folio:** el microservicio core no persiste el folio en ninguna tabla propia. Solo llama `nextval`. La asociación cotización–folio ocurre en `Insurance-Quoter-Back`.
