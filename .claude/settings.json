@@ -10,7 +10,6 @@
       "Read(./.env.*)",
       "Read(./backend/firebase_credentials.json)",
       "Read(./secrets/**)",
-      "Bash(git push *)",
       "Bash(git reset --hard *)",
       "Bash(rm -rf *)"
     ]
