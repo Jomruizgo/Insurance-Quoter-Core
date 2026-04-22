@@ -1,0 +1,534 @@
+<mxfile host="65bd71144e">
+    <diagram id="c4-l3-core-v2" name="C4 Level 3 — plataforma-core-ohs">
+        <mxGraphModel dx="1310" dy="1378" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2800" pageHeight="2150" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+
+                <mxCell id="title" value="C4 Nivel 3 — plataforma-core-ohs (Arquitectura Hexagonal Modular — 8 Bounded Contexts independientes)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="400" y="110" width="1900" height="36" as="geometry"/>
+                </mxCell>
+
+                <!-- Main container -->
+                <mxCell id="mc" value="&lt;b&gt;plataforma-core-ohs&lt;/b&gt;&lt;br&gt;[Container: Spring Boot 4 / Java 21 | Puerto: 8081 | DB: insurance_core_db :5433]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;verticalAlign=top;fontSize=12;fontStyle=1;align=center;spacingTop=10;" parent="1" vertex="1">
+                    <mxGeometry x="195" y="155" width="2310" height="1710" as="geometry"/>
+                </mxCell>
+
+                <!-- Column headers (reference strip) -->
+                <mxCell id="hdr_in" value="&lt;b&gt;Adapter In&lt;/b&gt;&lt;br&gt;Controller + DTOs + Mapper" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;fontStyle=1;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="335" y="270" width="320" height="42" as="geometry"/>
+                </mxCell>
+                <mxCell id="hdr_ip" value="&lt;b&gt;Input Port&lt;/b&gt;&lt;br&gt;domain/port/in" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#4a86c8;fontSize=10;fontStyle=1;align=center;dashed=1;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="663" y="270" width="175" height="42" as="geometry"/>
+                </mxCell>
+                <mxCell id="hdr_app" value="&lt;b&gt;Use Case&lt;/b&gt;&lt;br&gt;application/usecase" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;fontStyle=1;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="847" y="270" width="245" height="42" as="geometry"/>
+                </mxCell>
+                <mxCell id="hdr_op" value="&lt;b&gt;Output Port&lt;/b&gt;&lt;br&gt;domain/port/out" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#b85450;fontSize=10;fontStyle=1;align=center;dashed=1;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="1101" y="270" width="185" height="42" as="geometry"/>
+                </mxCell>
+                <mxCell id="hdr_out" value="&lt;b&gt;Adapter Out&lt;/b&gt;&lt;br&gt;infrastructure/adapter/out" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=10;fontStyle=1;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="1295" y="270" width="665" height="42" as="geometry"/>
+                </mxCell>
+
+                <!-- ============================================================ -->
+                <!-- BOUNDED CONTEXT: FOLIO  (JPA)  y=325, h=128                 -->
+                <!-- ============================================================ -->
+                <mxCell id="bc_folio" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0f4ff;strokeColor=#6c8ebf;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="213" y="325" width="2278" height="128" as="geometry"/>
+                </mxCell>
+                <mxCell id="lbl_folio" value="&lt;b&gt;FOLIO&lt;/b&gt;&lt;br&gt;[JPA]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;fontStyle=1;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="217" y="328" width="110" height="122" as="geometry"/>
+                </mxCell>
+                <mxCell id="ctrl_folio" value="&lt;b&gt;FolioController&lt;/b&gt;&lt;br&gt;[Spring MVC]&lt;br&gt;GET /v1/folios" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0e5199;fontColor=#ffffff;fontSize=10;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="337" y="345" width="215" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="dto_folio" value="FolioResponse" style="text;html=1;strokeColor=#82b366;fillColor=#f9fff9;align=left;verticalAlign=middle;spacingLeft=5;rounded=1;fontSize=9;" parent="1" vertex="1">
+                    <mxGeometry x="337" y="415" width="106" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="mpr_folio" value="FolioRestMapper" style="text;html=1;strokeColor=#82b366;fillColor=#f9fff9;align=left;verticalAlign=middle;spacingLeft=5;rounded=1;fontSize=9;" parent="1" vertex="1">
+                    <mxGeometry x="449" y="415" width="110" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="ip_folio" value="«interface»&lt;br&gt;&lt;b&gt;GenerateFolioUseCase&lt;/b&gt;&lt;br&gt;generate(): Folio" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e6f3ff;strokeColor=#4a86c8;fontSize=9;align=center;fontStyle=2;" parent="1" vertex="1">
+                    <mxGeometry x="663" y="352" width="172" height="52" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_folio" value="&lt;b&gt;GenerateFolioUseCaseImpl&lt;/b&gt;&lt;br&gt;[Use Case]&lt;br&gt;Genera folio con secuencia + Clock" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0e5199;fontColor=#ffffff;fontSize=10;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="847" y="352" width="242" height="52" as="geometry"/>
+                </mxCell>
+                <mxCell id="op_folio" value="«interface»&lt;br&gt;&lt;b&gt;FolioSequencePort&lt;/b&gt;&lt;br&gt;nextFolioNumber(): String" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6e6;strokeColor=#b85450;fontSize=9;align=center;fontStyle=2;" parent="1" vertex="1">
+                    <mxGeometry x="1101" y="352" width="178" height="52" as="geometry"/>
+                </mxCell>
+                <mxCell id="adp_folio" value="&lt;b&gt;FolioSequenceJpaAdapter&lt;/b&gt;&lt;br&gt;[Spring Data JPA | Native Query]&lt;br&gt;implements FolioSequencePort" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0e5199;fontColor=#ffffff;fontSize=10;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="1295" y="345" width="310" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="ent_folio" value="FolioSequenceEntity" style="text;html=1;strokeColor=#d79b00;fillColor=#fff9f0;align=left;verticalAlign=middle;spacingLeft=5;rounded=1;fontSize=9;" parent="1" vertex="1">
+                    <mxGeometry x="1616" y="360" width="148" height="30" as="geometry"/>
+                </mxCell>
+
+                <!-- ============================================================ -->
+                <!-- BOUNDED CONTEXT: ZIPCODE  (JPA)  y=465, h=185               -->
+                <!-- ============================================================ -->
+                <mxCell id="bc_zipcode" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0f4ff;strokeColor=#6c8ebf;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="213" y="465" width="2278" height="185" as="geometry"/>
+                </mxCell>
+                <mxCell id="lbl_zipcode" value="&lt;b&gt;ZIPCODE&lt;/b&gt;&lt;br&gt;[JPA]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;fontStyle=1;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="217" y="468" width="110" height="179" as="geometry"/>
+                </mxCell>
+                <mxCell id="ctrl_zipcode" value="&lt;b&gt;ZipCodeController&lt;/b&gt;&lt;br&gt;[Spring MVC]&lt;br&gt;GET /v1/zip-codes/{code}&lt;br&gt;POST /v1/zip-codes/validate" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0e5199;fontColor=#ffffff;fontSize=10;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="337" y="478" width="215" height="76" as="geometry"/>
+                </mxCell>
+                <mxCell id="dto_zipcode" value="ZipCodeResponse&lt;br&gt;ValidateZipCodeRequest&lt;br&gt;ZipCodeValidationResponse" style="text;html=1;strokeColor=#82b366;fillColor=#f9fff9;align=left;verticalAlign=top;spacingLeft=5;rounded=1;fontSize=9;" parent="1" vertex="1">
+                    <mxGeometry x="337" y="563" width="160" height="48" as="geometry"/>
+                </mxCell>
+                <mxCell id="mpr_zipcode" value="ZipCodeRestMapper" style="text;html=1;strokeColor=#82b366;fillColor=#f9fff9;align=left;verticalAlign=middle;spacingLeft=5;rounded=1;fontSize=9;" parent="1" vertex="1">
+                    <mxGeometry x="502" y="563" width="130" height="28" as="geometry"/>
+                </mxCell>
+                <mxCell id="ip_zipcode1" value="«interface»&lt;br&gt;&lt;b&gt;GetZipCodeUseCase&lt;/b&gt;&lt;br&gt;getByZipCode(String): ZipCode" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e6f3ff;strokeColor=#4a86c8;fontSize=9;align=center;fontStyle=2;" parent="1" vertex="1">
+                    <mxGeometry x="663" y="473" width="172" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="ip_zipcode2" value="«interface»&lt;br&gt;&lt;b&gt;ValidateZipCodeUseCase&lt;/b&gt;&lt;br&gt;validate(String): ValidationResult" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e6f3ff;strokeColor=#4a86c8;fontSize=9;align=center;fontStyle=2;" parent="1" vertex="1">
+                    <mxGeometry x="663" y="540" width="172" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_zipcode1" value="&lt;b&gt;GetZipCodeUseCaseImpl&lt;/b&gt;&lt;br&gt;[Use Case]&lt;br&gt;Busca CP; lanza ZipCodeNotFoundException" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0e5199;fontColor=#ffffff;fontSize=10;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="847" y="473" width="242" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_zipcode2" value="&lt;b&gt;ValidateZipCodeUseCaseImpl&lt;/b&gt;&lt;br&gt;[Use Case]&lt;br&gt;Devuelve valid=true/false sin excepción" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0e5199;fontColor=#ffffff;fontSize=10;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="847" y="540" width="242" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="op_zipcode" value="«interface»&lt;br&gt;&lt;b&gt;ZipCodeRepository&lt;/b&gt;&lt;br&gt;findByZipCode(String):&lt;br&gt;Optional&lt;ZipCode&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6e6;strokeColor=#b85450;fontSize=9;align=center;fontStyle=2;" parent="1" vertex="1">
+                    <mxGeometry x="1101" y="488" width="178" height="72" as="geometry"/>
+                </mxCell>
+                <mxCell id="adp_zipcode" value="&lt;b&gt;ZipCodePersistenceAdapter&lt;/b&gt;&lt;br&gt;[Spring Data JPA | Repository Pattern]&lt;br&gt;implements ZipCodeRepository" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0e5199;fontColor=#ffffff;fontSize=10;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="1295" y="480" width="310" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="ent_zipcode" value="ZipCodeJpa&lt;br&gt;ZipCodeNeighborhoodJpa" style="text;html=1;strokeColor=#d79b00;fillColor=#fff9f0;align=left;verticalAlign=top;spacingLeft=5;rounded=1;fontSize=9;" parent="1" vertex="1">
+                    <mxGeometry x="1616" y="487" width="158" height="40" as="geometry"/>
+                </mxCell>
+
+                <!-- ============================================================ -->
+                <!-- BOUNDED CONTEXT: TARIFF  (JPA)  y=662, h=185                -->
+                <!-- ============================================================ -->
+                <mxCell id="bc_tariff" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0f4ff;strokeColor=#6c8ebf;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="213" y="662" width="2278" height="185" as="geometry"/>
+                </mxCell>
+                <mxCell id="lbl_tariff" value="&lt;b&gt;TARIFF&lt;/b&gt;&lt;br&gt;[JPA]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;fontStyle=1;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="217" y="665" width="110" height="179" as="geometry"/>
+                </mxCell>
+                <mxCell id="ctrl_tariff" value="&lt;b&gt;TariffController&lt;/b&gt;&lt;br&gt;[Spring MVC]&lt;br&gt;GET /v1/tariffs&lt;br&gt;PUT /v1/tariffs" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0e5199;fontColor=#ffffff;fontSize=10;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="337" y="675" width="215" height="76" as="geometry"/>
+                </mxCell>
+                <mxCell id="dto_tariff" value="TariffsResponse | TariffsDto&lt;br&gt;UpdateTariffsRequest" style="text;html=1;strokeColor=#82b366;fillColor=#f9fff9;align=left;verticalAlign=top;spacingLeft=5;rounded=1;fontSize=9;" parent="1" vertex="1">
+                    <mxGeometry x="337" y="760" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="mpr_tariff" value="TariffRestMapper" style="text;html=1;strokeColor=#82b366;fillColor=#f9fff9;align=left;verticalAlign=middle;spacingLeft=5;rounded=1;fontSize=9;" parent="1" vertex="1">
+                    <mxGeometry x="502" y="760" width="130" height="28" as="geometry"/>
+                </mxCell>
+                <mxCell id="ip_tariff1" value="«interface»&lt;br&gt;&lt;b&gt;GetTariffsUseCase&lt;/b&gt;&lt;br&gt;getCurrent(): Tariffs" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e6f3ff;strokeColor=#4a86c8;fontSize=9;align=center;fontStyle=2;" parent="1" vertex="1">
+                    <mxGeometry x="663" y="670" width="172" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="ip_tariff2" value="«interface»&lt;br&gt;&lt;b&gt;UpdateTariffsUseCase&lt;/b&gt;&lt;br&gt;update(Tariffs): Tariffs" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e6f3ff;strokeColor=#4a86c8;fontSize=9;align=center;fontStyle=2;" parent="1" vertex="1">
+                    <mxGeometry x="663" y="737" width="172" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_tariff1" value="&lt;b&gt;GetTariffsUseCaseImpl&lt;/b&gt;&lt;br&gt;[Use Case]&lt;br&gt;Obtiene tarifas actuales (singleton id=1)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0e5199;fontColor=#ffffff;fontSize=10;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="847" y="670" width="242" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_tariff2" value="&lt;b&gt;UpdateTariffsUseCaseImpl&lt;/b&gt;&lt;br&gt;[Use Case]&lt;br&gt;Actualiza tarifas; valida @Positive" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0e5199;fontColor=#ffffff;fontSize=10;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="847" y="737" width="242" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="op_tariff" value="«interface»&lt;br&gt;&lt;b&gt;TariffRepository&lt;/b&gt;&lt;br&gt;findCurrent(): Optional&lt;Tariffs&gt;&lt;br&gt;save(Tariffs): Tariffs" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6e6;strokeColor=#b85450;fontSize=9;align=center;fontStyle=2;" parent="1" vertex="1">
+                    <mxGeometry x="1101" y="685" width="178" height="72" as="geometry"/>
+                </mxCell>
+                <mxCell id="adp_tariff" value="&lt;b&gt;TariffJpaAdapter&lt;/b&gt;&lt;br&gt;[Spring Data JPA | Repository Pattern]&lt;br&gt;implements TariffRepository — singleton id=1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0e5199;fontColor=#ffffff;fontSize=10;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="1295" y="680" width="310" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="ent_tariff" value="TariffJpa" style="text;html=1;strokeColor=#d79b00;fillColor=#fff9f0;align=left;verticalAlign=middle;spacingLeft=5;rounded=1;fontSize=9;" parent="1" vertex="1">
+                    <mxGeometry x="1616" y="695" width="90" height="28" as="geometry"/>
+                </mxCell>
+
+                <!-- ============================================================ -->
+                <!-- BOUNDED CONTEXT: AGENT  (JSON)  y=859, h=122                -->
+                <!-- ============================================================ -->
+                <mxCell id="bc_agent" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5fff0;strokeColor=#82b366;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="213" y="859" width="2278" height="122" as="geometry"/>
+                </mxCell>
+                <mxCell id="lbl_agent" value="&lt;b&gt;AGENT&lt;/b&gt;&lt;br&gt;[JSON]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;fontStyle=1;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="217" y="862" width="110" height="116" as="geometry"/>
+                </mxCell>
+                <mxCell id="ctrl_agent" value="&lt;b&gt;AgentController&lt;/b&gt;&lt;br&gt;[Spring MVC]&lt;br&gt;GET /v1/agents" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0e5199;fontColor=#ffffff;fontSize=10;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="337" y="877" width="215" height="58" as="geometry"/>
+                </mxCell>
+                <mxCell id="dto_agent" value="AgentsResponse | AgentDto" style="text;html=1;strokeColor=#82b366;fillColor=#f9fff9;align=left;verticalAlign=middle;spacingLeft=5;rounded=1;fontSize=9;" parent="1" vertex="1">
+                    <mxGeometry x="337" y="944" width="148" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="mpr_agent" value="AgentRestMapper" style="text;html=1;strokeColor=#82b366;fillColor=#f9fff9;align=left;verticalAlign=middle;spacingLeft=5;rounded=1;fontSize=9;" parent="1" vertex="1">
+                    <mxGeometry x="490" y="944" width="120" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="ip_agent" value="«interface»&lt;br&gt;&lt;b&gt;GetAgentsUseCase&lt;/b&gt;&lt;br&gt;getAll(): List&lt;Agent&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e6f3ff;strokeColor=#4a86c8;fontSize=9;align=center;fontStyle=2;" parent="1" vertex="1">
+                    <mxGeometry x="663" y="883" width="172" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_agent" value="&lt;b&gt;GetAgentsUseCaseImpl&lt;/b&gt;&lt;br&gt;[Use Case]&lt;br&gt;Devuelve lista completa de agentes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0e5199;fontColor=#ffffff;fontSize=10;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="847" y="883" width="242" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="op_agent" value="«interface»&lt;br&gt;&lt;b&gt;AgentRepository&lt;/b&gt;&lt;br&gt;findAll(): List&lt;Agent&gt;&lt;br&gt;existsByCode(String): boolean" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6e6;strokeColor=#b85450;fontSize=9;align=center;fontStyle=2;" parent="1" vertex="1">
+                    <mxGeometry x="1101" y="876" width="178" height="62" as="geometry"/>
+                </mxCell>
+                <mxCell id="adp_agent" value="&lt;b&gt;AgentJsonAdapter&lt;/b&gt;&lt;br&gt;[Jackson ObjectMapper | &lt;u&gt;GoF: Façade&lt;/u&gt;]&lt;br&gt;implements AgentRepository — lee agents.json" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0e5199;fontColor=#ffffff;fontSize=10;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="1295" y="877" width="310" height="58" as="geometry"/>
+                </mxCell>
+
+                <!-- ============================================================ -->
+                <!-- BOUNDED CONTEXT: BUSINESSLINE  (JSON)  y=993, h=122         -->
+                <!-- ============================================================ -->
+                <mxCell id="bc_bline" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5fff0;strokeColor=#82b366;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="213" y="993" width="2278" height="122" as="geometry"/>
+                </mxCell>
+                <mxCell id="lbl_bline" value="&lt;b&gt;BUSINESS&lt;/b&gt;&lt;br&gt;&lt;b&gt;LINE&lt;/b&gt;&lt;br&gt;[JSON]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;fontStyle=1;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="217" y="996" width="110" height="116" as="geometry"/>
+                </mxCell>
+                <mxCell id="ctrl_bline" value="&lt;b&gt;BusinessLineController&lt;/b&gt;&lt;br&gt;[Spring MVC]&lt;br&gt;GET /v1/business-lines" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0e5199;fontColor=#ffffff;fontSize=10;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="337" y="1011" width="215" height="58" as="geometry"/>
+                </mxCell>
+                <mxCell id="dto_bline" value="BusinessLinesResponse | BusinessLineDto" style="text;html=1;strokeColor=#82b366;fillColor=#f9fff9;align=left;verticalAlign=middle;spacingLeft=5;rounded=1;fontSize=9;" parent="1" vertex="1">
+                    <mxGeometry x="337" y="1078" width="175" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="mpr_bline" value="BusinessLineRestMapper" style="text;html=1;strokeColor=#82b366;fillColor=#f9fff9;align=left;verticalAlign=middle;spacingLeft=5;rounded=1;fontSize=9;" parent="1" vertex="1">
+                    <mxGeometry x="517" y="1078" width="130" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="ip_bline" value="«interface»&lt;br&gt;&lt;b&gt;GetBusinessLinesUseCase&lt;/b&gt;&lt;br&gt;getAll(): List&lt;BusinessLine&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e6f3ff;strokeColor=#4a86c8;fontSize=9;align=center;fontStyle=2;" parent="1" vertex="1">
+                    <mxGeometry x="663" y="1017" width="172" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_bline" value="&lt;b&gt;GetBusinessLinesUseCaseImpl&lt;/b&gt;&lt;br&gt;[Use Case]&lt;br&gt;Devuelve catálogo de giros de negocio" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0e5199;fontColor=#ffffff;fontSize=10;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="847" y="1017" width="242" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="op_bline" value="«interface»&lt;br&gt;&lt;b&gt;BusinessLineRepository&lt;/b&gt;&lt;br&gt;findAll(): List&lt;BusinessLine&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6e6;strokeColor=#b85450;fontSize=9;align=center;fontStyle=2;" parent="1" vertex="1">
+                    <mxGeometry x="1101" y="1010" width="178" height="56" as="geometry"/>
+                </mxCell>
+                <mxCell id="adp_bline" value="&lt;b&gt;BusinessLineJsonAdapter&lt;/b&gt;&lt;br&gt;[Jackson ObjectMapper | &lt;u&gt;GoF: Façade&lt;/u&gt;]&lt;br&gt;implements BusinessLineRepository — lee business-lines.json" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0e5199;fontColor=#ffffff;fontSize=10;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="1295" y="1011" width="310" height="58" as="geometry"/>
+                </mxCell>
+
+                <!-- ============================================================ -->
+                <!-- BOUNDED CONTEXT: GUARANTEE  (JSON)  y=1127, h=122           -->
+                <!-- ============================================================ -->
+                <mxCell id="bc_guarantee" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5fff0;strokeColor=#82b366;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="213" y="1127" width="2278" height="122" as="geometry"/>
+                </mxCell>
+                <mxCell id="lbl_guarantee" value="&lt;b&gt;GUARANTEE&lt;/b&gt;&lt;br&gt;[JSON]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;fontStyle=1;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="217" y="1130" width="110" height="116" as="geometry"/>
+                </mxCell>
+                <mxCell id="ctrl_guarantee" value="&lt;b&gt;GuaranteeController&lt;/b&gt;&lt;br&gt;[Spring MVC]&lt;br&gt;GET /v1/guarantees" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0e5199;fontColor=#ffffff;fontSize=10;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="337" y="1145" width="215" height="58" as="geometry"/>
+                </mxCell>
+                <mxCell id="dto_guarantee" value="GuaranteesResponse | GuaranteeDto" style="text;html=1;strokeColor=#82b366;fillColor=#f9fff9;align=left;verticalAlign=middle;spacingLeft=5;rounded=1;fontSize=9;" parent="1" vertex="1">
+                    <mxGeometry x="337" y="1212" width="165" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="mpr_guarantee" value="GuaranteeRestMapper" style="text;html=1;strokeColor=#82b366;fillColor=#f9fff9;align=left;verticalAlign=middle;spacingLeft=5;rounded=1;fontSize=9;" parent="1" vertex="1">
+                    <mxGeometry x="507" y="1212" width="130" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="ip_guarantee" value="«interface»&lt;br&gt;&lt;b&gt;GetGuaranteesUseCase&lt;/b&gt;&lt;br&gt;getAll(): List&lt;Guarantee&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e6f3ff;strokeColor=#4a86c8;fontSize=9;align=center;fontStyle=2;" parent="1" vertex="1">
+                    <mxGeometry x="663" y="1151" width="172" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_guarantee" value="&lt;b&gt;GetGuaranteesUseCaseImpl&lt;/b&gt;&lt;br&gt;[Use Case]&lt;br&gt;Devuelve catálogo (tarifable / no tarifable)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0e5199;fontColor=#ffffff;fontSize=10;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="847" y="1151" width="242" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="op_guarantee" value="«interface»&lt;br&gt;&lt;b&gt;GuaranteeRepository&lt;/b&gt;&lt;br&gt;findAll() | findAllTarifable()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6e6;strokeColor=#b85450;fontSize=9;align=center;fontStyle=2;" parent="1" vertex="1">
+                    <mxGeometry x="1101" y="1144" width="178" height="56" as="geometry"/>
+                </mxCell>
+                <mxCell id="adp_guarantee" value="&lt;b&gt;GuaranteeJsonAdapter&lt;/b&gt;&lt;br&gt;[Jackson ObjectMapper | &lt;u&gt;GoF: Façade&lt;/u&gt;]&lt;br&gt;implements GuaranteeRepository — lee guarantees.json" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0e5199;fontColor=#ffffff;fontSize=10;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="1295" y="1145" width="310" height="58" as="geometry"/>
+                </mxCell>
+
+                <!-- ============================================================ -->
+                <!-- BOUNDED CONTEXT: RISKCLASSIFICATION  (JSON)  y=1261, h=122  -->
+                <!-- ============================================================ -->
+                <mxCell id="bc_riskclass" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5fff0;strokeColor=#82b366;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="213" y="1261" width="2278" height="122" as="geometry"/>
+                </mxCell>
+                <mxCell id="lbl_riskclass" value="&lt;b&gt;RISK CLASS.&lt;/b&gt;&lt;br&gt;[JSON]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;fontStyle=1;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="217" y="1264" width="110" height="116" as="geometry"/>
+                </mxCell>
+                <mxCell id="ctrl_riskclass" value="&lt;b&gt;RiskClassificationController&lt;/b&gt;&lt;br&gt;[Spring MVC]&lt;br&gt;GET /v1/risk-classifications" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0e5199;fontColor=#ffffff;fontSize=10;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="337" y="1279" width="215" height="58" as="geometry"/>
+                </mxCell>
+                <mxCell id="dto_riskclass" value="RiskClassificationsResponse | RiskClassificationDto" style="text;html=1;strokeColor=#82b366;fillColor=#f9fff9;align=left;verticalAlign=middle;spacingLeft=5;rounded=1;fontSize=9;" parent="1" vertex="1">
+                    <mxGeometry x="337" y="1346" width="200" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="mpr_riskclass" value="RiskClassificationRestMapper" style="text;html=1;strokeColor=#82b366;fillColor=#f9fff9;align=left;verticalAlign=middle;spacingLeft=5;rounded=1;fontSize=9;" parent="1" vertex="1">
+                    <mxGeometry x="540" y="1346" width="145" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="ip_riskclass" value="«interface»&lt;br&gt;&lt;b&gt;GetRiskClassificationsUseCase&lt;/b&gt;&lt;br&gt;getAll(): List&lt;RiskClassification&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e6f3ff;strokeColor=#4a86c8;fontSize=9;align=center;fontStyle=2;" parent="1" vertex="1">
+                    <mxGeometry x="663" y="1285" width="172" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_riskclass" value="&lt;b&gt;GetRiskClassificationsUseCaseImpl&lt;/b&gt;&lt;br&gt;[Use Case]&lt;br&gt;Devuelve clasificaciones de riesgo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0e5199;fontColor=#ffffff;fontSize=10;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="847" y="1285" width="242" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="op_riskclass" value="«interface»&lt;br&gt;&lt;b&gt;RiskClassificationRepository&lt;/b&gt;&lt;br&gt;findAll(): List&lt;RiskClassification&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6e6;strokeColor=#b85450;fontSize=9;align=center;fontStyle=2;" parent="1" vertex="1">
+                    <mxGeometry x="1101" y="1278" width="178" height="56" as="geometry"/>
+                </mxCell>
+                <mxCell id="adp_riskclass" value="&lt;b&gt;RiskClassificationJsonAdapter&lt;/b&gt;&lt;br&gt;[Jackson ObjectMapper | &lt;u&gt;GoF: Façade&lt;/u&gt;]&lt;br&gt;implements RiskClassificationRepository — lee risk-classifications.json" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0e5199;fontColor=#ffffff;fontSize=10;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="1295" y="1279" width="310" height="58" as="geometry"/>
+                </mxCell>
+
+                <!-- ============================================================ -->
+                <!-- BOUNDED CONTEXT: SUBSCRIBER  (JSON)  y=1395, h=122          -->
+                <!-- ============================================================ -->
+                <mxCell id="bc_subscriber" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5fff0;strokeColor=#82b366;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="213" y="1395" width="2278" height="122" as="geometry"/>
+                </mxCell>
+                <mxCell id="lbl_subscriber" value="&lt;b&gt;SUBSCRIBER&lt;/b&gt;&lt;br&gt;[JSON]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;fontStyle=1;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="217" y="1398" width="110" height="116" as="geometry"/>
+                </mxCell>
+                <mxCell id="ctrl_subscriber" value="&lt;b&gt;SubscriberController&lt;/b&gt;&lt;br&gt;[Spring MVC]&lt;br&gt;GET /v1/subscribers" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0e5199;fontColor=#ffffff;fontSize=10;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="337" y="1413" width="215" height="58" as="geometry"/>
+                </mxCell>
+                <mxCell id="dto_subscriber" value="SubscribersResponse | SubscriberDto" style="text;html=1;strokeColor=#82b366;fillColor=#f9fff9;align=left;verticalAlign=middle;spacingLeft=5;rounded=1;fontSize=9;" parent="1" vertex="1">
+                    <mxGeometry x="337" y="1480" width="165" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="mpr_subscriber" value="SubscriberRestMapper" style="text;html=1;strokeColor=#82b366;fillColor=#f9fff9;align=left;verticalAlign=middle;spacingLeft=5;rounded=1;fontSize=9;" parent="1" vertex="1">
+                    <mxGeometry x="507" y="1480" width="130" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="ip_subscriber" value="«interface»&lt;br&gt;&lt;b&gt;GetSubscribersUseCase&lt;/b&gt;&lt;br&gt;getAll(): List&lt;Subscriber&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e6f3ff;strokeColor=#4a86c8;fontSize=9;align=center;fontStyle=2;" parent="1" vertex="1">
+                    <mxGeometry x="663" y="1419" width="172" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_subscriber" value="&lt;b&gt;GetSubscribersUseCaseImpl&lt;/b&gt;&lt;br&gt;[Use Case]&lt;br&gt;Devuelve catálogo de suscriptores" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0e5199;fontColor=#ffffff;fontSize=10;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="847" y="1419" width="242" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="op_subscriber" value="«interface»&lt;br&gt;&lt;b&gt;SubscriberRepository&lt;/b&gt;&lt;br&gt;findAll(): List&lt;Subscriber&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6e6;strokeColor=#b85450;fontSize=9;align=center;fontStyle=2;" parent="1" vertex="1">
+                    <mxGeometry x="1101" y="1412" width="178" height="56" as="geometry"/>
+                </mxCell>
+                <mxCell id="adp_subscriber" value="&lt;b&gt;SubscriberJsonAdapter&lt;/b&gt;&lt;br&gt;[Jackson ObjectMapper | &lt;u&gt;GoF: Façade&lt;/u&gt;]&lt;br&gt;implements SubscriberRepository — lee subscribers.json" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0e5199;fontColor=#ffffff;fontSize=10;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="1295" y="1413" width="310" height="58" as="geometry"/>
+                </mxCell>
+
+                <!-- ============================================================ -->
+                <!-- JSON Fixtures shared storage (Adapter Out zone)              -->
+                <!-- ============================================================ -->
+                <mxCell id="json_fixtures" value="&lt;b&gt;classpath:fixtures/&lt;/b&gt;&lt;br&gt;agents.json&lt;br&gt;business-lines.json&lt;br&gt;guarantees.json&lt;br&gt;risk-classifications.json&lt;br&gt;subscribers.json" style="text;html=1;strokeColor=#d79b00;fillColor=#fff9f0;align=left;verticalAlign=top;spacingLeft=6;rounded=1;fontSize=9;" parent="1" vertex="1">
+                    <mxGeometry x="1618" y="905" width="185" height="102" as="geometry"/>
+                </mxCell>
+
+                <!-- ============================================================ -->
+                <!-- DOMAIN MODELS (bottom)  y=1535                              -->
+                <!-- ============================================================ -->
+                <mxCell id="bg_dom" value="&lt;b&gt;« Domain Model »&lt;/b&gt; — Java Records — sin dependencias a Spring ni JPA — compartido solo por referencia de tipo, NO por instancia" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;verticalAlign=top;fontSize=11;fontStyle=1;align=center;spacingTop=8;" parent="1" vertex="1">
+                    <mxGeometry x="213" y="1535" width="2278" height="295" as="geometry"/>
+                </mxCell>
+                <mxCell id="dom_folio" value="&lt;b&gt;Folio&lt;/b&gt; [Record]&lt;br&gt;folioNumber: String&lt;br&gt;generatedAt: Instant" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;align=left;spacingLeft=6;" parent="1" vertex="1">
+                    <mxGeometry x="228" y="1590" width="165" height="62" as="geometry"/>
+                </mxCell>
+                <mxCell id="dom_zipcode" value="&lt;b&gt;ZipCode&lt;/b&gt; [Record]&lt;br&gt;zipCode | state | municipality | city&lt;br&gt;neighborhoods: List&lt;String&gt;&lt;br&gt;catastrophicZone | tevZone | fhmZone" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;align=left;spacingLeft=6;" parent="1" vertex="1">
+                    <mxGeometry x="408" y="1590" width="215" height="75" as="geometry"/>
+                </mxCell>
+                <mxCell id="dom_zipval" value="&lt;b&gt;ZipCodeValidationResult&lt;/b&gt; [Record]&lt;br&gt;valid: boolean | zipCode: String" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;align=left;spacingLeft=6;" parent="1" vertex="1">
+                    <mxGeometry x="408" y="1680" width="215" height="38" as="geometry"/>
+                </mxCell>
+                <mxCell id="dom_tariff" value="&lt;b&gt;Tariffs&lt;/b&gt; [Record]&lt;br&gt;fireRate | cattevFactor&lt;br&gt;catfhmFactor | theftRate&lt;br&gt;electronicEquipmentRate" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;align=left;spacingLeft=6;" parent="1" vertex="1">
+                    <mxGeometry x="638" y="1590" width="175" height="75" as="geometry"/>
+                </mxCell>
+                <mxCell id="dom_agent" value="&lt;b&gt;Agent&lt;/b&gt; [Record]&lt;br&gt;code | name | subscriberId" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;align=left;spacingLeft=6;" parent="1" vertex="1">
+                    <mxGeometry x="828" y="1590" width="165" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="dom_bline" value="&lt;b&gt;BusinessLine&lt;/b&gt; [Record]&lt;br&gt;code | description | fireKey" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;align=left;spacingLeft=6;" parent="1" vertex="1">
+                    <mxGeometry x="1008" y="1590" width="165" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="dom_guarantee" value="&lt;b&gt;Guarantee&lt;/b&gt; [Record]&lt;br&gt;code | description&lt;br&gt;tarifable: boolean" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;align=left;spacingLeft=6;" parent="1" vertex="1">
+                    <mxGeometry x="1188" y="1590" width="165" height="62" as="geometry"/>
+                </mxCell>
+                <mxCell id="dom_riskclass" value="&lt;b&gt;RiskClassification&lt;/b&gt; [Record]&lt;br&gt;code | description" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;align=left;spacingLeft=6;" parent="1" vertex="1">
+                    <mxGeometry x="1368" y="1590" width="165" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="dom_subscriber" value="&lt;b&gt;Subscriber&lt;/b&gt; [Record]&lt;br&gt;id | name" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;align=left;spacingLeft=6;" parent="1" vertex="1">
+                    <mxGeometry x="1548" y="1590" width="140" height="50" as="geometry"/>
+                </mxCell>
+                <!-- Domain note -->
+                <mxCell id="dom_note" value="&lt;b&gt;Cada bounded context tiene su propio dominio.&lt;/b&gt; No existen dependencias cruzadas entre modelos.&lt;br&gt;La independencia se garantiza por la separación de paquetes (zipcode/, tariff/, folio/, etc.) y sus propias clases @Configuration." style="text;html=1;strokeColor=#d6b656;fillColor=#fffde7;align=left;verticalAlign=middle;spacingLeft=8;rounded=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="228" y="1740" width="2248" height="50" as="geometry"/>
+                </mxCell>
+
+                <!-- ============================================================ -->
+                <!-- EXTERNAL SYSTEMS                                              -->
+                <!-- ============================================================ -->
+                <mxCell id="ext_back" value="&lt;b&gt;plataforma-danos-back&lt;/b&gt;&lt;br&gt;[Spring Boot :8080]&lt;br&gt;Cotizador principal (consumidor)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=10;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="10" y="745" width="175" height="75" as="geometry"/>
+                </mxCell>
+                <mxCell id="ext_db" value="&lt;b&gt;PostgreSQL :5433&lt;/b&gt;&lt;br&gt;insurance_core_db" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=10;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="2520" y="530" width="165" height="80" as="geometry"/>
+                </mxCell>
+
+                <!-- ============================================================ -->
+                <!-- EDGES                                                         -->
+                <!-- ============================================================ -->
+
+                <!-- plataforma-danos-back → controllers -->
+                <mxCell id="e_bk_folio" value="HTTP" style="endArrow=block;endFill=1;html=1;fontSize=9;edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="ext_back" target="ctrl_folio" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_bk_zc" value="" style="endArrow=block;endFill=1;html=1;fontSize=9;edgeStyle=orthogonalEdgeStyle;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="ext_back" target="ctrl_zipcode" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_bk_tf" value="" style="endArrow=block;endFill=1;html=1;fontSize=9;edgeStyle=orthogonalEdgeStyle;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="ext_back" target="ctrl_tariff" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_bk_gu" value="" style="endArrow=block;endFill=1;html=1;fontSize=9;edgeStyle=orthogonalEdgeStyle;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="ext_back" target="ctrl_guarantee" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+
+                <!-- Controllers → Input Ports -->
+                <mxCell id="e_c_ip_folio" value="calls" style="endArrow=open;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="ctrl_folio" target="ip_folio" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_c_ip_zc1" value="calls" style="endArrow=open;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="ctrl_zipcode" target="ip_zipcode1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_c_ip_zc2" value="" style="endArrow=open;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="ctrl_zipcode" target="ip_zipcode2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_c_ip_tf1" value="calls" style="endArrow=open;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="ctrl_tariff" target="ip_tariff1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_c_ip_tf2" value="" style="endArrow=open;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="ctrl_tariff" target="ip_tariff2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_c_ip_ag" value="calls" style="endArrow=open;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="ctrl_agent" target="ip_agent" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_c_ip_bl" value="calls" style="endArrow=open;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="ctrl_bline" target="ip_bline" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_c_ip_gu" value="calls" style="endArrow=open;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="ctrl_guarantee" target="ip_guarantee" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_c_ip_rc" value="calls" style="endArrow=open;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="ctrl_riskclass" target="ip_riskclass" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_c_ip_su" value="calls" style="endArrow=open;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="ctrl_subscriber" target="ip_subscriber" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+
+                <!-- Use Cases implement Input Ports -->
+                <mxCell id="e_uc_ip_folio" value="implements" style="dashed=1;endArrow=block;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="uc_folio" target="ip_folio" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_uc_ip_zc1" value="implements" style="dashed=1;endArrow=block;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="uc_zipcode1" target="ip_zipcode1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_uc_ip_zc2" value="implements" style="dashed=1;endArrow=block;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="uc_zipcode2" target="ip_zipcode2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_uc_ip_tf1" value="implements" style="dashed=1;endArrow=block;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="uc_tariff1" target="ip_tariff1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_uc_ip_tf2" value="implements" style="dashed=1;endArrow=block;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="uc_tariff2" target="ip_tariff2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_uc_ip_ag" value="implements" style="dashed=1;endArrow=block;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="uc_agent" target="ip_agent" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_uc_ip_bl" value="implements" style="dashed=1;endArrow=block;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="uc_bline" target="ip_bline" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_uc_ip_gu" value="implements" style="dashed=1;endArrow=block;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="uc_guarantee" target="ip_guarantee" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_uc_ip_rc" value="implements" style="dashed=1;endArrow=block;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="uc_riskclass" target="ip_riskclass" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_uc_ip_su" value="implements" style="dashed=1;endArrow=block;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="uc_subscriber" target="ip_subscriber" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+
+                <!-- Use Cases → Output Ports -->
+                <mxCell id="e_uc_op_folio" value="via Port" style="endArrow=open;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="uc_folio" target="op_folio" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_uc_op_zc1" value="" style="endArrow=open;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="uc_zipcode1" target="op_zipcode" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_uc_op_zc2" value="" style="endArrow=open;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="uc_zipcode2" target="op_zipcode" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_uc_op_tf1" value="" style="endArrow=open;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="uc_tariff1" target="op_tariff" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_uc_op_tf2" value="" style="endArrow=open;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="uc_tariff2" target="op_tariff" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_uc_op_ag" value="" style="endArrow=open;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="uc_agent" target="op_agent" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_uc_op_bl" value="" style="endArrow=open;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="uc_bline" target="op_bline" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_uc_op_gu" value="" style="endArrow=open;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="uc_guarantee" target="op_guarantee" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_uc_op_rc" value="" style="endArrow=open;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="uc_riskclass" target="op_riskclass" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_uc_op_su" value="" style="endArrow=open;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="uc_subscriber" target="op_subscriber" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+
+                <!-- Adapters implement Output Ports -->
+                <mxCell id="e_a_op_folio" value="implements" style="dashed=1;endArrow=block;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="adp_folio" target="op_folio" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_a_op_zc" value="implements" style="dashed=1;endArrow=block;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="adp_zipcode" target="op_zipcode" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_a_op_tf" value="implements" style="dashed=1;endArrow=block;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="adp_tariff" target="op_tariff" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_a_op_ag" value="implements" style="dashed=1;endArrow=block;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="adp_agent" target="op_agent" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_a_op_bl" value="implements" style="dashed=1;endArrow=block;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="adp_bline" target="op_bline" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_a_op_gu" value="implements" style="dashed=1;endArrow=block;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="adp_guarantee" target="op_guarantee" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_a_op_rc" value="implements" style="dashed=1;endArrow=block;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="adp_riskclass" target="op_riskclass" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_a_op_su" value="implements" style="dashed=1;endArrow=block;endFill=0;html=1;fontSize=9;edgeStyle=entityRelationEdgeStyle;" parent="1" source="adp_subscriber" target="op_subscriber" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+
+                <!-- JPA Adapters → PostgreSQL -->
+                <mxCell id="e_db_folio" value="JDBC/JPA" style="endArrow=block;endFill=1;html=1;fontSize=9;edgeStyle=orthogonalEdgeStyle;" parent="1" source="adp_folio" target="ext_db" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_db_zc" value="" style="endArrow=block;endFill=1;html=1;fontSize=9;edgeStyle=orthogonalEdgeStyle;" parent="1" source="adp_zipcode" target="ext_db" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_db_tf" value="" style="endArrow=block;endFill=1;html=1;fontSize=9;edgeStyle=orthogonalEdgeStyle;" parent="1" source="adp_tariff" target="ext_db" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+
+                <!-- JSON Adapters → fixtures -->
+                <mxCell id="e_jf_ag" value="reads" style="endArrow=block;endFill=1;html=1;fontSize=9;edgeStyle=orthogonalEdgeStyle;" parent="1" source="adp_agent" target="json_fixtures" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_jf_bl" value="" style="endArrow=block;endFill=1;html=1;fontSize=9;edgeStyle=orthogonalEdgeStyle;" parent="1" source="adp_bline" target="json_fixtures" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_jf_gu" value="" style="endArrow=block;endFill=1;html=1;fontSize=9;edgeStyle=orthogonalEdgeStyle;" parent="1" source="adp_guarantee" target="json_fixtures" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_jf_rc" value="" style="endArrow=block;endFill=1;html=1;fontSize=9;edgeStyle=orthogonalEdgeStyle;" parent="1" source="adp_riskclass" target="json_fixtures" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_jf_su" value="" style="endArrow=block;endFill=1;html=1;fontSize=9;edgeStyle=orthogonalEdgeStyle;" parent="1" source="adp_subscriber" target="json_fixtures" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+
+                <!-- Legend -->
+                <mxCell id="leg" value="&lt;b&gt;Leyenda&lt;/b&gt;&lt;br&gt;——→  calls / reads&lt;br&gt;- - ▷  implements&lt;br&gt;&lt;b&gt;GoF:&lt;/b&gt; Façade | Repository | DTO | Mapper&lt;br&gt;&lt;b&gt;Azul [JPA]:&lt;/b&gt; folio, zipcode, tariff → PostgreSQL&lt;br&gt;&lt;b&gt;Verde [JSON]:&lt;/b&gt; catálogos estáticos → classpath fixtures" style="text;html=1;strokeColor=#666666;fillColor=#f5f5f5;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;rounded=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="10" y="1440" width="185" height="135" as="geometry"/>
+                </mxCell>
+
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
