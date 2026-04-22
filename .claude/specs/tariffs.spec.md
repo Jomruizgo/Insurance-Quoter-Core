@@ -1,6 +1,6 @@
 ---
 id: SPEC-008
-status: APPROVED
+status: IMPLEMENTED
 feature: tariffs
 created: 2026-04-21
 updated: 2026-04-21
