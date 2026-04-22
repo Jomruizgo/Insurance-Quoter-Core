@@ -24,7 +24,8 @@ Ver contratos completos en `docs/api-contracts.md` — sección 8.
 | GET | /v1/folios | Genera siguiente folio secuencial |
 | GET | /v1/catalogs/risk-classification | Clasificación de riesgo |
 | GET | /v1/catalogs/guarantees | Catálogo de garantías |
-| GET | /v1/tariffs | Tarifas y factores técnicos |
+| GET | /v1/tariffs | Consulta tarifas y factores técnicos |
+| PUT | /v1/tariffs | Actualiza factores técnicos |
 
 ## Ejecución local
 
