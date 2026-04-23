@@ -1,0 +1,7 @@
+[
+  { "code": "BL-001", "description": "Bodega de mercancías", "fireKey": "FK-INC-01" },
+  { "code": "BL-002", "description": "Oficina administrativa", "fireKey": "FK-INC-02" },
+  { "code": "BL-003", "description": "Local comercial", "fireKey": "FK-INC-03" },
+  { "code": "BL-004", "description": "Restaurante", "fireKey": "FK-INC-04" },
+  { "code": "BL-005", "description": "Industria ligera", "fireKey": "FK-INC-05" }
+]
