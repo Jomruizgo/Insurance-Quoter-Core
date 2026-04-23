@@ -1,6 +1,5 @@
 package com.sofka.insurancequoter.core.tariff.infrastructure.adapter.in.rest;
 
-import com.sofka.insurancequoter.core.tariff.domain.exception.TariffNotFoundException;
 import com.sofka.insurancequoter.core.tariff.domain.model.Tariffs;
 import com.sofka.insurancequoter.core.tariff.domain.port.in.GetTariffsUseCase;
 import com.sofka.insurancequoter.core.tariff.domain.port.in.UpdateTariffsUseCase;
@@ -37,17 +36,26 @@ class TariffControllerTest {
     @InjectMocks
     private TariffController controller;
 
+    private static final Tariffs DOMAIN = new Tariffs(
+            0.0015, 0.0012, 0.07, 0.0008, 0.0005,
+            0.03, 0.02, 0.015, 0.015, 0.002,
+            0.003, 0.005, 0.001, 0.002, 1.16
+    );
+
+    private static final TariffsDto DTO = new TariffsDto(
+            0.0015, 0.0012, 0.07, 0.0008, 0.0005,
+            0.03, 0.02, 0.015, 0.015, 0.002,
+            0.003, 0.005, 0.001, 0.002, 1.16
+    );
+
     // ---- GET /v1/tariffs ----
 
     @Test
     void getTariffs_whenExists_returns200WithBody() {
         // GIVEN
-        Tariffs domain = new Tariffs(0.0015, 0.0008, 0.0005, 0.003, 0.002);
-        TariffsDto dto = new TariffsDto(0.0015, 0.0008, 0.0005, 0.003, 0.002);
-        TariffsResponse response = new TariffsResponse(dto);
-
-        when(getTariffsUseCase.getCurrent()).thenReturn(domain);
-        when(mapper.toResponse(domain)).thenReturn(response);
+        TariffsResponse response = new TariffsResponse(DTO);
+        when(getTariffsUseCase.getCurrent()).thenReturn(DOMAIN);
+        when(mapper.toResponse(DOMAIN)).thenReturn(response);
 
         // WHEN
         ResponseEntity<TariffsResponse> result = controller.getTariffs();
@@ -56,8 +64,9 @@ class TariffControllerTest {
         assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(result.getBody()).isNotNull();
         assertThat(result.getBody().tariffs().fireRate()).isEqualTo(0.0015);
+        assertThat(result.getBody().tariffs().commercialFactor()).isEqualTo(1.16);
         verify(getTariffsUseCase).getCurrent();
-        verify(mapper).toResponse(domain);
+        verify(mapper).toResponse(DOMAIN);
     }
 
     // ---- PUT /v1/tariffs ----
@@ -65,14 +74,26 @@ class TariffControllerTest {
     @Test
     void updateTariffs_whenValid_returns200WithUpdatedBody() {
         // GIVEN
-        UpdateTariffsRequest request = new UpdateTariffsRequest(0.002, 0.001, 0.0007, 0.004, 0.003);
-        Tariffs domain = new Tariffs(0.002, 0.001, 0.0007, 0.004, 0.003);
-        TariffsDto dto = new TariffsDto(0.002, 0.001, 0.0007, 0.004, 0.003);
-        TariffsResponse response = new TariffsResponse(dto);
+        UpdateTariffsRequest request = new UpdateTariffsRequest(
+                0.002, 0.0015, 0.08, 0.001, 0.0007,
+                0.04, 0.025, 0.02, 0.02, 0.003,
+                0.004, 0.006, 0.0015, 0.0025, 1.20
+        );
+        Tariffs updated = new Tariffs(
+                0.002, 0.0015, 0.08, 0.001, 0.0007,
+                0.04, 0.025, 0.02, 0.02, 0.003,
+                0.004, 0.006, 0.0015, 0.0025, 1.20
+        );
+        TariffsDto updatedDto = new TariffsDto(
+                0.002, 0.0015, 0.08, 0.001, 0.0007,
+                0.04, 0.025, 0.02, 0.02, 0.003,
+                0.004, 0.006, 0.0015, 0.0025, 1.20
+        );
+        TariffsResponse response = new TariffsResponse(updatedDto);
 
-        when(mapper.toDomain(request)).thenReturn(domain);
-        when(updateTariffsUseCase.update(domain)).thenReturn(domain);
-        when(mapper.toResponse(domain)).thenReturn(response);
+        when(mapper.toDomain(request)).thenReturn(updated);
+        when(updateTariffsUseCase.update(updated)).thenReturn(updated);
+        when(mapper.toResponse(updated)).thenReturn(response);
 
         // WHEN
         ResponseEntity<TariffsResponse> result = controller.updateTariffs(request);
@@ -81,9 +102,10 @@ class TariffControllerTest {
         assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(result.getBody()).isNotNull();
         assertThat(result.getBody().tariffs().fireRate()).isEqualTo(0.002);
+        assertThat(result.getBody().tariffs().commercialFactor()).isEqualTo(1.20);
         verify(mapper).toDomain(request);
-        verify(updateTariffsUseCase).update(domain);
-        verify(mapper).toResponse(domain);
+        verify(updateTariffsUseCase).update(updated);
+        verify(mapper).toResponse(updated);
     }
 
     // ---- @ExceptionHandler ----

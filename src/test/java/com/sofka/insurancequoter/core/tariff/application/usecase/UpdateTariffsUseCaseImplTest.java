@@ -24,6 +24,18 @@ class UpdateTariffsUseCaseImplTest {
 
     private UpdateTariffsUseCaseImpl useCase;
 
+    private static final Tariffs EXISTING = new Tariffs(
+            0.0015, 0.0012, 0.07, 0.0008, 0.0005,
+            0.03, 0.02, 0.015, 0.015, 0.002,
+            0.003, 0.005, 0.001, 0.002, 1.16
+    );
+
+    private static final Tariffs UPDATED = new Tariffs(
+            0.002, 0.0015, 0.08, 0.001, 0.0007,
+            0.04, 0.025, 0.02, 0.02, 0.003,
+            0.004, 0.006, 0.0015, 0.0025, 1.20
+    );
+
     @BeforeEach
     void setUp() {
         useCase = new UpdateTariffsUseCaseImpl(tariffRepository);
@@ -32,33 +44,29 @@ class UpdateTariffsUseCaseImplTest {
     @Test
     void update_whenTariffsExist_savesAndReturnsUpdatedTariffs() {
         // GIVEN
-        Tariffs existing = new Tariffs(0.0015, 0.0008, 0.0005, 0.003, 0.002);
-        Tariffs updated = new Tariffs(0.002, 0.001, 0.0007, 0.004, 0.003);
-        when(tariffRepository.findCurrent()).thenReturn(Optional.of(existing));
-        when(tariffRepository.save(updated)).thenReturn(updated);
+        when(tariffRepository.findCurrent()).thenReturn(Optional.of(EXISTING));
+        when(tariffRepository.save(UPDATED)).thenReturn(UPDATED);
 
         // WHEN
-        Tariffs result = useCase.update(updated);
+        Tariffs result = useCase.update(UPDATED);
 
         // THEN
-        assertThat(result).isEqualTo(updated);
+        assertThat(result).isEqualTo(UPDATED);
         assertThat(result.fireRate()).isEqualTo(0.002);
-        assertThat(result.cattevFactor()).isEqualTo(0.001);
-        assertThat(result.catfhmFactor()).isEqualTo(0.0007);
-        assertThat(result.theftRate()).isEqualTo(0.004);
-        assertThat(result.electronicEquipmentRate()).isEqualTo(0.003);
+        assertThat(result.fireContentsRate()).isEqualTo(0.0015);
+        assertThat(result.coverageExtensionFactor()).isEqualTo(0.08);
+        assertThat(result.commercialFactor()).isEqualTo(1.20);
         verify(tariffRepository).findCurrent();
-        verify(tariffRepository).save(updated);
+        verify(tariffRepository).save(UPDATED);
     }
 
     @Test
     void update_whenNoTariffsExist_throwsTariffNotFoundException() {
         // GIVEN
-        Tariffs updated = new Tariffs(0.002, 0.001, 0.0007, 0.004, 0.003);
         when(tariffRepository.findCurrent()).thenReturn(Optional.empty());
 
         // WHEN / THEN
-        assertThatThrownBy(() -> useCase.update(updated))
+        assertThatThrownBy(() -> useCase.update(UPDATED))
                 .isInstanceOf(TariffNotFoundException.class)
                 .hasMessage("Tariffs not found");
 

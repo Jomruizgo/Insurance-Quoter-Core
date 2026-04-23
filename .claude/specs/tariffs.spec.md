@@ -25,9 +25,9 @@ El microservicio `Insurance-Quoter-Core` expone dos endpoints sobre `/v1/tariffs
 - `GET /v1/tariffs` — retorna los factores técnicos y tasas de tarificación vigentes.
 - `PUT /v1/tariffs` — actualiza los factores técnicos (operación administrativa).
 
-Los datos se persisten en la tabla `tariffs` de PostgreSQL (DB `insurance_core_db`, puerto 5433). La tabla tiene **una sola fila activa** identificada por `id = 1`. La migración Flyway siembra los valores iniciales.
+Los datos se persisten en la tabla `tariffs` de PostgreSQL (DB `insurance_core_db`, puerto 5433). La tabla tiene **una sola fila activa** identificada por `id = 1`. Las migraciones Flyway crean la tabla, siembran los valores iniciales y amplían el esquema con 10 columnas adicionales (V4, V5, V6).
 
-Este endpoint es **crítico** para `Insurance-Quoter-Back`: cada vez que se ejecuta el cálculo de prima (`POST /v1/quotes/{folio}/calculate`), el cotizador consume estas tarifas para calcular la cobertura de incendio, robo, equipos electrónicos y las contribuciones CATTEV y CATFHM.
+Este endpoint es **crítico** para `Insurance-Quoter-Back`: cada vez que se ejecuta el cálculo de prima (`POST /v1/quotes/{folio}/calculate`), el cotizador consume estas tarifas para calcular todas las garantías (incendio, robo, equipos electrónicos, interrupción de negocio, etc.) y las contribuciones CATTEV y CATFHM.
 
 A diferencia de los catálogos de lista, `Tariffs` es un objeto único por diseño: `TariffRepository` expone `findCurrent(): Tariffs` y `save(Tariffs): Tariffs` en lugar de `findAll()`.
 
@@ -150,25 +150,35 @@ CRITERIO-2.3: Tabla vacía o fila id=1 ausente
 
 ### Modelo de Datos (PostgreSQL)
 
-#### Tabla `tariffs`
+#### Tabla `tariffs` — esquema completo (V4 + V6)
 
 ```sql
 CREATE TABLE tariffs (
-    id                       BIGINT PRIMARY KEY DEFAULT 1,
-    fire_rate                DOUBLE PRECISION NOT NULL CHECK (fire_rate > 0),
-    cattev_factor            DOUBLE PRECISION NOT NULL CHECK (cattev_factor > 0),
-    catfhm_factor            DOUBLE PRECISION NOT NULL CHECK (catfhm_factor > 0),
-    theft_rate               DOUBLE PRECISION NOT NULL CHECK (theft_rate > 0),
-    electronic_equipment_rate DOUBLE PRECISION NOT NULL CHECK (electronic_equipment_rate > 0)
+    id                             BIGINT PRIMARY KEY DEFAULT 1,
+    -- V4: campos originales
+    fire_rate                      DOUBLE PRECISION NOT NULL CHECK (fire_rate > 0),
+    cattev_factor                  DOUBLE PRECISION NOT NULL CHECK (cattev_factor > 0),
+    catfhm_factor                  DOUBLE PRECISION NOT NULL CHECK (catfhm_factor > 0),
+    theft_rate                     DOUBLE PRECISION NOT NULL CHECK (theft_rate > 0),
+    electronic_equipment_rate      DOUBLE PRECISION NOT NULL CHECK (electronic_equipment_rate > 0),
+    -- V6: campos adicionales para cálculo completo de prima
+    fire_contents_rate             DOUBLE PRECISION NOT NULL DEFAULT 0.0012,
+    coverage_extension_factor      DOUBLE PRECISION NOT NULL DEFAULT 0.07,
+    debris_removal_factor          DOUBLE PRECISION NOT NULL DEFAULT 0.03,
+    extraordinary_expenses_factor  DOUBLE PRECISION NOT NULL DEFAULT 0.02,
+    rental_loss_rate               DOUBLE PRECISION NOT NULL DEFAULT 0.015,
+    business_interruption_rate     DOUBLE PRECISION NOT NULL DEFAULT 0.015,
+    cash_and_values_rate           DOUBLE PRECISION NOT NULL DEFAULT 0.005,
+    glass_rate                     DOUBLE PRECISION NOT NULL DEFAULT 0.001,
+    luminous_signage_rate          DOUBLE PRECISION NOT NULL DEFAULT 0.002,
+    commercial_factor              DOUBLE PRECISION NOT NULL DEFAULT 1.16
 );
 ```
 
-**Seed inicial (Flyway):**
-
-```sql
-INSERT INTO tariffs (id, fire_rate, cattev_factor, catfhm_factor, theft_rate, electronic_equipment_rate)
-VALUES (1, 0.0015, 0.0008, 0.0005, 0.003, 0.002);
-```
+**Migraciones Flyway:**
+- `V4__create_tariffs.sql` — crea la tabla con los 5 campos originales
+- `V5__seed_tariffs.sql` — INSERT de la fila inicial con `id = 1`
+- `V6__add_tariff_columns.sql` — añade 10 columnas para cálculo completo de prima
 
 ### Modelo de Dominio
 
@@ -178,20 +188,40 @@ VALUES (1, 0.0015, 0.0008, 0.0005, 0.003, 0.002);
 // com.sofka.insurancequoter.core.tariff.domain.model.Tariffs
 public record Tariffs(
     double fireRate,
+    double fireContentsRate,
+    double coverageExtensionFactor,
     double cattevFactor,
     double catfhmFactor,
+    double debrisRemovalFactor,
+    double extraordinaryExpensesFactor,
+    double rentalLossRate,
+    double businessInterruptionRate,
+    double electronicEquipmentRate,
     double theftRate,
-    double electronicEquipmentRate
+    double cashAndValuesRate,
+    double glassRate,
+    double luminousSignageRate,
+    double commercialFactor
 ) {}
 ```
 
-| Campo                     | Tipo   | Restricciones            |
-|---------------------------|--------|--------------------------|
-| `fireRate`                | double | Positivo — tasa incendio |
-| `cattevFactor`            | double | Positivo — factor CATTEV |
-| `catfhmFactor`            | double | Positivo — factor CATFHM |
-| `theftRate`               | double | Positivo — tasa robo     |
-| `electronicEquipmentRate` | double | Positivo — tasa equipos  |
+| Campo                          | Tipo   | Restricciones                              |
+|--------------------------------|--------|--------------------------------------------|
+| `fireRate`                     | double | Positivo — tasa incendio                   |
+| `fireContentsRate`             | double | Positivo — tasa contenidos incendio        |
+| `coverageExtensionFactor`      | double | Positivo — factor extensión de cobertura   |
+| `cattevFactor`                 | double | Positivo — factor CATTEV                   |
+| `catfhmFactor`                 | double | Positivo — factor CATFHM                   |
+| `debrisRemovalFactor`          | double | Positivo — factor remoción de escombros    |
+| `extraordinaryExpensesFactor`  | double | Positivo — factor gastos extraordinarios   |
+| `rentalLossRate`               | double | Positivo — tasa pérdida de rentas          |
+| `businessInterruptionRate`     | double | Positivo — tasa interrupción de negocio    |
+| `electronicEquipmentRate`      | double | Positivo — tasa equipos electrónicos       |
+| `theftRate`                    | double | Positivo — tasa robo                       |
+| `cashAndValuesRate`            | double | Positivo — tasa dinero y valores           |
+| `glassRate`                    | double | Positivo — tasa cristales                  |
+| `luminousSignageRate`          | double | Positivo — tasa anuncios luminosos         |
+| `commercialFactor`             | double | Positivo — factor comercial (multiplicador)|
 
 > `double` primitivo garantiza que Jackson serialice siempre un número, nunca `null`.
 
@@ -205,10 +235,20 @@ public class TariffJpa {
     @Id
     private Long id;
     private double fireRate;
+    private double fireContentsRate;
+    private double coverageExtensionFactor;
     private double cattevFactor;
     private double catfhmFactor;
-    private double theftRate;
+    private double debrisRemovalFactor;
+    private double extraordinaryExpensesFactor;
+    private double rentalLossRate;
+    private double businessInterruptionRate;
     private double electronicEquipmentRate;
+    private double theftRate;
+    private double cashAndValuesRate;
+    private double glassRate;
+    private double luminousSignageRate;
+    private double commercialFactor;
 }
 ```
 
@@ -251,11 +291,21 @@ public interface UpdateTariffsUseCase {
 ```json
 {
   "tariffs": {
-    "fireRate": 0.0015,
-    "cattevFactor": 0.0008,
-    "catfhmFactor": 0.0005,
-    "theftRate": 0.003,
-    "electronicEquipmentRate": 0.002
+    "fireRate": 0.002,
+    "fireContentsRate": 0.0012,
+    "coverageExtensionFactor": 0.07,
+    "cattevFactor": 0.001,
+    "catfhmFactor": 0.0007,
+    "debrisRemovalFactor": 0.03,
+    "extraordinaryExpensesFactor": 0.02,
+    "rentalLossRate": 0.015,
+    "businessInterruptionRate": 0.015,
+    "electronicEquipmentRate": 0.003,
+    "theftRate": 0.004,
+    "cashAndValuesRate": 0.005,
+    "glassRate": 0.001,
+    "luminousSignageRate": 0.002,
+    "commercialFactor": 1.16
   }
 }
 ```
@@ -279,10 +329,20 @@ public interface UpdateTariffsUseCase {
 ```json
 {
   "fireRate": 0.0018,
+  "fireContentsRate": 0.0013,
+  "coverageExtensionFactor": 0.08,
   "cattevFactor": 0.0009,
   "catfhmFactor": 0.0006,
+  "debrisRemovalFactor": 0.035,
+  "extraordinaryExpensesFactor": 0.025,
+  "rentalLossRate": 0.016,
+  "businessInterruptionRate": 0.016,
+  "electronicEquipmentRate": 0.0025,
   "theftRate": 0.0035,
-  "electronicEquipmentRate": 0.0025
+  "cashAndValuesRate": 0.006,
+  "glassRate": 0.0012,
+  "luminousSignageRate": 0.0022,
+  "commercialFactor": 1.18
 }
 ```
 
@@ -291,10 +351,20 @@ public interface UpdateTariffsUseCase {
 {
   "tariffs": {
     "fireRate": 0.0018,
+    "fireContentsRate": 0.0013,
+    "coverageExtensionFactor": 0.08,
     "cattevFactor": 0.0009,
     "catfhmFactor": 0.0006,
+    "debrisRemovalFactor": 0.035,
+    "extraordinaryExpensesFactor": 0.025,
+    "rentalLossRate": 0.016,
+    "businessInterruptionRate": 0.016,
+    "electronicEquipmentRate": 0.0025,
     "theftRate": 0.0035,
-    "electronicEquipmentRate": 0.0025
+    "cashAndValuesRate": 0.006,
+    "glassRate": 0.0012,
+    "luminousSignageRate": 0.0022,
+    "commercialFactor": 1.18
   }
 }
 ```
@@ -316,10 +386,20 @@ public interface UpdateTariffsUseCase {
 ```java
 public record TariffsDto(
     double fireRate,
+    double fireContentsRate,
+    double coverageExtensionFactor,
     double cattevFactor,
     double catfhmFactor,
+    double debrisRemovalFactor,
+    double extraordinaryExpensesFactor,
+    double rentalLossRate,
+    double businessInterruptionRate,
+    double electronicEquipmentRate,
     double theftRate,
-    double electronicEquipmentRate
+    double cashAndValuesRate,
+    double glassRate,
+    double luminousSignageRate,
+    double commercialFactor
 ) {}
 ```
 
@@ -334,14 +414,24 @@ public record TariffsResponse(TariffsDto tariffs) {}
 ```java
 public record UpdateTariffsRequest(
     @Positive double fireRate,
+    @Positive double fireContentsRate,
+    @Positive double coverageExtensionFactor,
     @Positive double cattevFactor,
     @Positive double catfhmFactor,
+    @Positive double debrisRemovalFactor,
+    @Positive double extraordinaryExpensesFactor,
+    @Positive double rentalLossRate,
+    @Positive double businessInterruptionRate,
+    @Positive double electronicEquipmentRate,
     @Positive double theftRate,
-    @Positive double electronicEquipmentRate
+    @Positive double cashAndValuesRate,
+    @Positive double glassRate,
+    @Positive double luminousSignageRate,
+    @Positive double commercialFactor
 ) {}
 ```
 
-> Se usa `@Positive` de Jakarta Validation — rechaza cero y negativos con HTTP 400 automáticamente.
+> Se usa `@Positive` de Jakarta Validation — rechaza cero y negativos con HTTP 400 automáticamente. Los 15 campos son obligatorios.
 
 ### Arquitectura Hexagonal — estructura de paquetes
 

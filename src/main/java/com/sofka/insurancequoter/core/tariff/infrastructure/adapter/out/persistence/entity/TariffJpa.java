@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 /**
  * JPA entity for the single-row tariffs catalog.
  * Always persisted with id = 1.
+ * Contains all 15 rate/factor columns required for full premium calculation.
  */
 @Entity
 @Table(name = "tariffs")
@@ -24,8 +25,18 @@ public class TariffJpa {
     private Long id;
 
     private double fireRate;
+    private double fireContentsRate;
+    private double coverageExtensionFactor;
     private double cattevFactor;
     private double catfhmFactor;
-    private double theftRate;
+    private double debrisRemovalFactor;
+    private double extraordinaryExpensesFactor;
+    private double rentalLossRate;
+    private double businessInterruptionRate;
     private double electronicEquipmentRate;
+    private double theftRate;
+    private double cashAndValuesRate;
+    private double glassRate;
+    private double luminousSignageRate;
+    private double commercialFactor;
 }
