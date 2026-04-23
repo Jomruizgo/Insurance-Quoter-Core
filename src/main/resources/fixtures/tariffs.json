@@ -1,0 +1,19 @@
+{
+  "tariffs": {
+    "fireRate": 0.0015,
+    "fireContentsRate": 0.0012,
+    "coverageExtensionFactor": 0.07,
+    "cattevFactor": 0.0008,
+    "catfhmFactor": 0.0005,
+    "debrisRemovalFactor": 0.03,
+    "extraordinaryExpensesFactor": 0.02,
+    "rentalLossRate": 0.015,
+    "businessInterruptionRate": 0.015,
+    "electronicEquipmentRate": 0.002,
+    "theftRate": 0.003,
+    "cashAndValuesRate": 0.005,
+    "glassRate": 0.001,
+    "luminousSignageRate": 0.002,
+    "commercialFactor": 1.16
+  }
+}

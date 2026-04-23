@@ -15,10 +15,20 @@ public class TariffRestMapper {
     public TariffsResponse toResponse(Tariffs tariffs) {
         TariffsDto dto = new TariffsDto(
                 tariffs.fireRate(),
+                tariffs.fireContentsRate(),
+                tariffs.coverageExtensionFactor(),
                 tariffs.cattevFactor(),
                 tariffs.catfhmFactor(),
+                tariffs.debrisRemovalFactor(),
+                tariffs.extraordinaryExpensesFactor(),
+                tariffs.rentalLossRate(),
+                tariffs.businessInterruptionRate(),
+                tariffs.electronicEquipmentRate(),
                 tariffs.theftRate(),
-                tariffs.electronicEquipmentRate()
+                tariffs.cashAndValuesRate(),
+                tariffs.glassRate(),
+                tariffs.luminousSignageRate(),
+                tariffs.commercialFactor()
         );
         return new TariffsResponse(dto);
     }
@@ -26,10 +36,20 @@ public class TariffRestMapper {
     public Tariffs toDomain(UpdateTariffsRequest request) {
         return new Tariffs(
                 request.fireRate(),
+                request.fireContentsRate(),
+                request.coverageExtensionFactor(),
                 request.cattevFactor(),
                 request.catfhmFactor(),
+                request.debrisRemovalFactor(),
+                request.extraordinaryExpensesFactor(),
+                request.rentalLossRate(),
+                request.businessInterruptionRate(),
+                request.electronicEquipmentRate(),
                 request.theftRate(),
-                request.electronicEquipmentRate()
+                request.cashAndValuesRate(),
+                request.glassRate(),
+                request.luminousSignageRate(),
+                request.commercialFactor()
         );
     }
 }

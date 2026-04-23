@@ -8,8 +8,18 @@ import jakarta.validation.constraints.Positive;
  */
 public record UpdateTariffsRequest(
         @Positive double fireRate,
+        @Positive double fireContentsRate,
+        @Positive double coverageExtensionFactor,
         @Positive double cattevFactor,
         @Positive double catfhmFactor,
+        @Positive double debrisRemovalFactor,
+        @Positive double extraordinaryExpensesFactor,
+        @Positive double rentalLossRate,
+        @Positive double businessInterruptionRate,
+        @Positive double electronicEquipmentRate,
         @Positive double theftRate,
-        @Positive double electronicEquipmentRate
+        @Positive double cashAndValuesRate,
+        @Positive double glassRate,
+        @Positive double luminousSignageRate,
+        @Positive double commercialFactor
 ) {}
