@@ -6,21 +6,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.Map;
 
 /**
  * Global fallback exception handler for all unhandled exceptions.
- * Controllers may define their own @ExceptionHandler for domain-specific exceptions
- * (e.g. TariffController handles TariffNotFoundException locally). This handler
- * only activates when no local handler matches — it acts as a safety net.
+ * Extends ResponseEntityExceptionHandler so Spring's built-in handlers for
+ * validation exceptions (MethodArgumentNotValidException → 400, etc.) take
+ * precedence over the generic Exception handler below.
  *
- * Records catalog_errors_total{errorType} for every unhandled exception so that
- * unexpected failure patterns become visible in Prometheus/Grafana dashboards.
+ * Records catalog_errors_total{errorType} for every truly unhandled exception
+ * so unexpected failure patterns become visible in Prometheus/Grafana.
  */
 @RestControllerAdvice
 @RequiredArgsConstructor
-public class GlobalExceptionHandler {
+public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     private final CatalogErrorMetrics catalogErrorMetrics;
 
