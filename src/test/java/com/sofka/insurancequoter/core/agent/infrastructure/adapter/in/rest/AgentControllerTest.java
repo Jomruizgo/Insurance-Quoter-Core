@@ -5,6 +5,7 @@ import com.sofka.insurancequoter.core.agent.domain.port.in.GetAgentsUseCase;
 import com.sofka.insurancequoter.core.agent.infrastructure.adapter.in.rest.dto.AgentDto;
 import com.sofka.insurancequoter.core.agent.infrastructure.adapter.in.rest.dto.AgentsResponse;
 import com.sofka.insurancequoter.core.agent.infrastructure.adapter.in.rest.mapper.AgentRestMapper;
+import com.sofka.insurancequoter.core.shared.infrastructure.metrics.AgentMetrics;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -26,6 +27,9 @@ class AgentControllerTest {
 
     @Mock
     private AgentRestMapper agentRestMapper;
+
+    @Mock
+    private AgentMetrics agentMetrics;
 
     @InjectMocks
     private AgentController controller;

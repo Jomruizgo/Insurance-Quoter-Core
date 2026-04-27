@@ -1,5 +1,6 @@
 package com.sofka.insurancequoter.core.subscriber.infrastructure.adapter.in.rest;
 
+import com.sofka.insurancequoter.core.shared.infrastructure.metrics.SubscriberMetrics;
 import com.sofka.insurancequoter.core.subscriber.domain.model.Subscriber;
 import com.sofka.insurancequoter.core.subscriber.domain.port.in.GetSubscribersUseCase;
 import com.sofka.insurancequoter.core.subscriber.infrastructure.adapter.in.rest.dto.SubscriberDto;
@@ -26,6 +27,9 @@ class SubscriberControllerTest {
 
     @Mock
     private SubscriberRestMapper subscriberRestMapper;
+
+    @Mock
+    private SubscriberMetrics subscriberMetrics;
 
     @InjectMocks
     private SubscriberController controller;

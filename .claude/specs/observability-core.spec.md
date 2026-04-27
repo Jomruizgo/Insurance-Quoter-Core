@@ -1,6 +1,6 @@
 ---
 id: SPEC-009
-status: DRAFT
+status: APPROVED
 feature: observability-core
 created: 2026-04-27
 updated: 2026-04-27
