@@ -4,6 +4,7 @@ import com.sofka.insurancequoter.core.folio.domain.model.Folio;
 import com.sofka.insurancequoter.core.folio.domain.port.in.GenerateFolioUseCase;
 import com.sofka.insurancequoter.core.folio.infrastructure.adapter.in.rest.dto.FolioResponse;
 import com.sofka.insurancequoter.core.folio.infrastructure.adapter.in.rest.mapper.FolioRestMapper;
+import com.sofka.insurancequoter.core.shared.infrastructure.metrics.FolioMetrics;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,6 +26,9 @@ class FolioControllerTest {
 
     @Mock
     private FolioRestMapper folioRestMapper;
+
+    @Mock
+    private FolioMetrics folioMetrics;
 
     @InjectMocks
     private FolioController controller;
