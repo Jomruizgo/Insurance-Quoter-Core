@@ -1,8 +1,10 @@
 package com.sofka.insurancequoter.core.zipcode.application.usecase;
 
+import com.sofka.insurancequoter.core.shared.infrastructure.metrics.ZipCodeMetrics;
 import com.sofka.insurancequoter.core.zipcode.domain.exception.ZipCodeNotFoundException;
 import com.sofka.insurancequoter.core.zipcode.domain.model.ZipCode;
 import com.sofka.insurancequoter.core.zipcode.domain.port.out.ZipCodeRepository;
+import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +28,9 @@ class GetZipCodeUseCaseImplTest {
 
     @BeforeEach
     void setUp() {
-        useCase = new GetZipCodeUseCaseImpl(zipCodeRepository);
+        // ZipCodeMetrics uses a real SimpleMeterRegistry — no mocking needed for infrastructure
+        ZipCodeMetrics zipCodeMetrics = new ZipCodeMetrics(new SimpleMeterRegistry());
+        useCase = new GetZipCodeUseCaseImpl(zipCodeRepository, zipCodeMetrics);
     }
 
     @Test

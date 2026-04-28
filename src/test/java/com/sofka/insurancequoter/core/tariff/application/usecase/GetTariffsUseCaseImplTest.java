@@ -1,8 +1,10 @@
 package com.sofka.insurancequoter.core.tariff.application.usecase;
 
+import com.sofka.insurancequoter.core.shared.infrastructure.metrics.TariffMetrics;
 import com.sofka.insurancequoter.core.tariff.domain.exception.TariffNotFoundException;
 import com.sofka.insurancequoter.core.tariff.domain.model.Tariffs;
 import com.sofka.insurancequoter.core.tariff.domain.port.out.TariffRepository;
+import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,7 +35,9 @@ class GetTariffsUseCaseImplTest {
 
     @BeforeEach
     void setUp() {
-        useCase = new GetTariffsUseCaseImpl(tariffRepository);
+        // TariffMetrics uses a real SimpleMeterRegistry — no mocking needed for infrastructure
+        TariffMetrics tariffMetrics = new TariffMetrics(new SimpleMeterRegistry());
+        useCase = new GetTariffsUseCaseImpl(tariffRepository, tariffMetrics);
     }
 
     @Test

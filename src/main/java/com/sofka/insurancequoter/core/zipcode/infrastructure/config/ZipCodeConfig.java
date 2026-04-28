@@ -1,5 +1,6 @@
 package com.sofka.insurancequoter.core.zipcode.infrastructure.config;
 
+import com.sofka.insurancequoter.core.shared.infrastructure.metrics.ZipCodeMetrics;
 import com.sofka.insurancequoter.core.zipcode.application.usecase.GetZipCodeUseCaseImpl;
 import com.sofka.insurancequoter.core.zipcode.application.usecase.ValidateZipCodeUseCaseImpl;
 import com.sofka.insurancequoter.core.zipcode.domain.port.in.GetZipCodeUseCase;
@@ -12,13 +13,14 @@ import org.springframework.context.annotation.Configuration;
  * Spring configuration for the zipcode bounded context.
  * Wires use case implementations without placing Spring annotations in the application layer.
  * ZipCodePersistenceAdapter is @Component and satisfies ZipCodeRepository automatically.
+ * ZipCodeMetrics is injected into GetZipCodeUseCaseImpl to record lookup counters.
  */
 @Configuration
 public class ZipCodeConfig {
 
     @Bean
-    public GetZipCodeUseCase getZipCodeUseCase(ZipCodeRepository zipCodeRepository) {
-        return new GetZipCodeUseCaseImpl(zipCodeRepository);
+    public GetZipCodeUseCase getZipCodeUseCase(ZipCodeRepository zipCodeRepository, ZipCodeMetrics zipCodeMetrics) {
+        return new GetZipCodeUseCaseImpl(zipCodeRepository, zipCodeMetrics);
     }
 
     @Bean

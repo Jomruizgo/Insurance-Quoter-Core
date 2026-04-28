@@ -4,11 +4,15 @@ import com.sofka.insurancequoter.core.tariff.domain.exception.TariffNotFoundExce
 import com.sofka.insurancequoter.core.tariff.domain.model.Tariffs;
 import com.sofka.insurancequoter.core.tariff.domain.port.in.UpdateTariffsUseCase;
 import com.sofka.insurancequoter.core.tariff.domain.port.out.TariffRepository;
+import io.micrometer.observation.annotation.Observed;
 
 /**
  * Use case implementation that updates the tariff catalog.
  * Verifies existence via findCurrent() before persisting the new values.
+ *
+ * @Observed creates a trace span per invocation via ObservedAspect (registered in ObservabilityConfig).
  */
+@Observed(name = "tariff.update", contextualName = "update-tariffs")
 public class UpdateTariffsUseCaseImpl implements UpdateTariffsUseCase {
 
     private final TariffRepository tariffRepository;
